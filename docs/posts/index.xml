@@ -1,0 +1,43 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on Jinof</title>
+        <link>https://blog.jinof.xyz/posts/</link>
+        <description>Recent content in Posts on Jinof</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Thu, 26 Mar 2020 18:32:01 +0800</lastBuildDate>
+        <atom:link href="https://blog.jinof.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>New Start</title>
+            <link>https://blog.jinof.xyz/posts/new-start/</link>
+            <pubDate>Thu, 26 Mar 2020 18:32:01 +0800</pubDate>
+            
+            <guid>https://blog.jinof.xyz/posts/new-start/</guid>
+            <description>从Hexo迁移到了Hugo
+一个全新的舞台，一个全新的开始
+从Pythoneer到Gopher
+由解释到编译
+更大的世界展示在我的眼前
+Docker, Kubernetes 运载着我的代码
+微服务架构带来全新的挑战
+我愿用一行行的代码
+写出搭建出一个方舟
+站在巨人的肩膀上
+眺望远方</description>
+            <content type="html"><![CDATA[<p>从Hexo迁移到了Hugo</p>
+<p>一个全新的舞台，一个全新的开始</p>
+<p>从Pythoneer到Gopher</p>
+<p>由解释到编译</p>
+<p>更大的世界展示在我的眼前</p>
+<p>Docker, Kubernetes 运载着我的代码</p>
+<p>微服务架构带来全新的挑战</p>
+<p>我愿用一行行的代码</p>
+<p>写出搭建出一个方舟</p>
+<p>站在巨人的肩膀上</p>
+<p>眺望远方</p>
+]]></content>
+        </item>
+        
+    </channel>
+</rss>

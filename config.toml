@@ -1,0 +1,57 @@
+baseURL = "https://blog.jinof.xyz/"
+languageCode = "en-us"
+theme = "hello-friend-ng"
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[params]
+    author = "Jinof"
+    dateform        = "Jan 2, 2006"
+    dateformShort   = "Jan 2"
+    dateformNum     = "2006-01-02"
+    dateformNumTime = "2006-01-02 15:04 -0700"
+
+    disableReadOtherPosts = false
+
+    # Metadata mostly used in document's head
+    description = "Jinof's Blog"
+    keywords = "homepage, blog, golang, docker, k8s, kubernetes"
+    images = [""]
+
+    # Directory name of your blog content (default is `content/posts`)
+    contentTypeName = "posts"
+
+    # Default theme "light" or "dark"
+    defaultTheme = "dark"
+
+    [[params.social]]
+    name = "github"
+    url  = "https://github.com/Jinof"
+
+    [[params.social]]
+        name = "email"
+        url  = "mailto:Jinof@foxmail.com"
+
+[languages]
+    [languages.en]
+        title = "Jinof"
+        homeSubtitle = "Share to the World"
+        keywords = ""
+        copyright = ""
+        readOtherPosts = "Read other posts"
+
+        [languages.en.params.logo]
+        logoText = "Sunshine in the rain"
+        logoHomeLink = "/"
+        # or
+        #
+        # path = "/img/your-example-logo.svg"
+        # alt = "Your example logo alt text"
+
+    # And you can even create generic menu
+    [[menu.main]]
+        identifier = "blog"
+        name       = "Blog"
+        url        = "/posts"   
