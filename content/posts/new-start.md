@@ -1,5 +1,4 @@
 ---
-## Deploying Hugo with ZEIT Now
 title: "New Start"
 date: 2020-03-26T18:32:01+08:00
 draft: false
