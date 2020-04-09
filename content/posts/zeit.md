@@ -25,4 +25,4 @@ cd themes;git clone -b master https://github.com/rhazdon/hugo-theme-hello-friend
 ## 解决方式
 别用submodule了...
 
-折腾了半天，改成[zeto github上官方示例](https://github.com/zeit/now/tree/master/examples/hugo)就成了。所以所以说整骚操作就是白给，跟官方一样才能少踩坑。不用submodule不仅不会碰见这个bug，直接用默认的command就能成功部署，何乐而不为
+折腾了半天，改成[zeit github上官方示例](https://github.com/zeit/now/tree/master/examples/hugo)就成了。所以所以说整骚操作就是白给，跟官方一样才能少踩坑。不用submodule不仅不会碰见这个bug，直接用默认的command就能成功部署，何乐而不为
