@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Jinof</title>
+    <link>https://blog.jinof.now.sh/tags/</link>
+    <description>Recent content in Tags on Jinof</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 12 Apr 2020 11:25:07 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.jinof.now.sh/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>golang</title>
+      <link>https://blog.jinof.now.sh/tags/golang/</link>
+      <pubDate>Sun, 12 Apr 2020 11:25:07 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://blog.jinof.now.sh/tags/linux/</link>
+      <pubDate>Sun, 12 Apr 2020 11:25:07 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>neovim</title>
+      <link>https://blog.jinof.now.sh/tags/neovim/</link>
+      <pubDate>Sun, 12 Apr 2020 11:25:07 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/tags/neovim/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>oh-my-zsh</title>
+      <link>https://blog.jinof.now.sh/tags/oh-my-zsh/</link>
+      <pubDate>Sun, 12 Apr 2020 11:25:07 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/tags/oh-my-zsh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>spacevim</title>
+      <link>https://blog.jinof.now.sh/tags/spacevim/</link>
+      <pubDate>Sun, 12 Apr 2020 11:25:07 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/tags/spacevim/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ssh</title>
+      <link>https://blog.jinof.now.sh/tags/ssh/</link>
+      <pubDate>Sun, 12 Apr 2020 11:25:07 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/tags/ssh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vim</title>
+      <link>https://blog.jinof.now.sh/tags/vim/</link>
+      <pubDate>Sun, 12 Apr 2020 11:25:07 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/tags/vim/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>zsh</title>
+      <link>https://blog.jinof.now.sh/tags/zsh/</link>
+      <pubDate>Sun, 12 Apr 2020 11:25:07 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/tags/zsh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>blog</title>
+      <link>https://blog.jinof.now.sh/tags/blog/</link>
+      <pubDate>Thu, 26 Mar 2020 18:32:01 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/tags/blog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hugo</title>
+      <link>https://blog.jinof.now.sh/tags/hugo/</link>
+      <pubDate>Thu, 26 Mar 2020 18:32:01 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/tags/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>now</title>
+      <link>https://blog.jinof.now.sh/tags/now/</link>
+      <pubDate>Thu, 26 Mar 2020 18:32:01 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/tags/now/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Start</title>
+      <link>https://blog.jinof.now.sh/tags/start/</link>
+      <pubDate>Thu, 26 Mar 2020 18:32:01 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/tags/start/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>zeit</title>
+      <link>https://blog.jinof.now.sh/tags/zeit/</link>
+      <pubDate>Thu, 26 Mar 2020 18:32:01 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/tags/zeit/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

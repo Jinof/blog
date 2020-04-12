@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jinof</title>
+    <link>https://blog.jinof.now.sh/</link>
+    <description>Recent content on Jinof</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 12 Apr 2020 11:25:07 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.jinof.now.sh/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>My Linux</title>
+      <link>https://blog.jinof.now.sh/posts/my-linux/</link>
+      <pubDate>Sun, 12 Apr 2020 11:25:07 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/posts/my-linux/</guid>
+      <description>记录下每次配环境的操作，减少环境配置时间  zsh ssh golang neovim/spacevim   zsh   安装 git 与 zsh
+ sudo apt install git zsh   安装 oh-my-zsh
+    curl
+ sh -c &amp;quot;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&amp;quot;   wget
+ sh -c &amp;quot;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&amp;quot;    安装插件    zsh-autosuggestion
+ git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions   zsh-syntax-highlighting
+ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting   ssh   配置 ssd_config</description>
+    </item>
+    
+    <item>
+      <title>New Start</title>
+      <link>https://blog.jinof.now.sh/posts/new-start/</link>
+      <pubDate>Thu, 26 Mar 2020 18:32:01 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/posts/new-start/</guid>
+      <description>从Hexo迁移到了Hugo
+一个全新的舞台，一个全新的开始
+从Pythoneer到Gopher
+由解释到编译
+更大的世界展示在我的眼前
+Docker, Kubernetes 运载着我的代码
+微服务架构带来全新的挑战
+我愿用一行行的代码
+写出搭建出一个方舟
+站在巨人的肩膀上
+眺望远方</description>
+    </item>
+    
+    <item>
+      <title>Use zeit to deploy hugo website</title>
+      <link>https://blog.jinof.now.sh/posts/zeit/</link>
+      <pubDate>Thu, 26 Mar 2020 18:32:01 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/posts/zeit/</guid>
+      <description>遇见的神奇Bug 使用如下命令无法在zeit 中正确部署
+cd themes;git clone -b master https://github.com/rhazdon/hugo-theme-hello-friend-ng;cd ../;hugo -D --gc 报错如下
+23:51:08.330 Error: No Output Directory named &amp;quot;public&amp;quot; found after the Build completed. You can configure the Output Directory in your project settings. Learn more: https://zeit.co/docs/v2/platform/frequently-asked-questions#missing-public-directory解决方式 别用submodule了&amp;hellip;
+折腾了半天，改成zeit github上官方示例就成了。所以所以说整骚操作就是白给，跟官方一样才能少踩坑。不用submodule不仅不会碰见这个bug，直接用默认的command就能成功部署，何乐而不为</description>
+    </item>
+    
+  </channel>
+</rss>

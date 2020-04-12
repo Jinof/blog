@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>oh-my-zsh on Jinof</title>
+    <link>https://blog.jinof.now.sh/tags/oh-my-zsh/</link>
+    <description>Recent content in oh-my-zsh on Jinof</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 12 Apr 2020 11:25:07 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.jinof.now.sh/tags/oh-my-zsh/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>My Linux</title>
+      <link>https://blog.jinof.now.sh/posts/my-linux/</link>
+      <pubDate>Sun, 12 Apr 2020 11:25:07 +0800</pubDate>
+      
+      <guid>https://blog.jinof.now.sh/posts/my-linux/</guid>
+      <description>记录下每次配环境的操作，减少环境配置时间  zsh ssh golang neovim/spacevim   zsh   安装 git 与 zsh
+ sudo apt install git zsh   安装 oh-my-zsh
+    curl
+ sh -c &amp;quot;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&amp;quot;   wget
+ sh -c &amp;quot;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&amp;quot;    安装插件    zsh-autosuggestion
+ git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions   zsh-syntax-highlighting
+ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting   ssh   配置 ssd_config</description>
+    </item>
+    
+  </channel>
+</rss>
