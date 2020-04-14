@@ -60,7 +60,7 @@ tags:
         wget https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
 - 解压
  
-        tar -C /usr/local -zxvf go1.4.linux-amd64.tar.gz
+        tar -C /usr/local -zxvf go1.4.2.linux-amd64.tar.gz
 - 配置go环境
 
         go env -w GO111MODULE=ON
