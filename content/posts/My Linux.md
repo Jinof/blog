@@ -67,7 +67,7 @@ tags:
         export PATH=$PATH:$GOROOT/bin
 - 配置go环境
 
-        go env -w GO111MODULE=ON
+        go env -w GO111MODULE=on
         go env -w GOPROXY="https://goproxy.cn,direct"
 
 ## neovim
