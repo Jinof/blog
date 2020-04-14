@@ -61,6 +61,10 @@ tags:
 - 解压
  
         tar -C /usr/local -zxvf go1.4.2.linux-amd64.tar.gz
+- 配置go环境变量, 将一下两行追加至`/etc/profile`中
+        
+        export GOROOT=/usr/local/go
+        export PATH=$PATH:$GOROOT/bin
 - 配置go环境
 
         go env -w GO111MODULE=ON
