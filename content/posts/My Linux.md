@@ -24,22 +24,32 @@ tags:
 ***
 ## zsh
 - 安装 git 与 zsh
-    
-        sudo apt install git zsh
+  
+    ```bash
+    sudo apt install git zsh
+    ```
 - 安装 oh-my-zsh
 1. curl
 
-        sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    ```bash
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    ```
 2. wget
 
-        sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+    ```bash
+    sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+    ```
 - 安装插件
-1. zsh-autosuggestion
+1. zsh-autosuggestions
 
-        git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+    ```bash
+    git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+    ```
 2. zsh-syntax-highlighting
 
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    ```bash
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    ```
 ## ssh
 1. 配置 ssd_config
 
@@ -53,22 +63,32 @@ tags:
 ## golang
 - 下载安装包
 1. curl
-      
-        curl -O https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
+   
+    ```bash
+    curl -O https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
+    ```
 2. wget 
    
-        wget https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
+    ```bash
+    wget https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
+    ```
 - 解压
- 
-        tar -C /usr/local -zxvf go1.4.2.linux-amd64.tar.gz
+
+    ```bash
+    tar -C /usr/local -zxvf go1.4.2.linux-amd64.tar.gz
+    ```
 - 配置go环境变量, 将一下两行追加至`/etc/profile`中
         
-        export GOROOT=/usr/local/go
-        export PATH=$PATH:$GOROOT/bin
+    ```bash
+    export GOROOT=/usr/local/go
+    export PATH=$PATH:$GOROOT/bin
+    ```
 - 配置go环境
 
-        go env -w GO111MODULE=on
-        go env -w GOPROXY="https://goproxy.cn,direct"
+    ```bash
+    go env -w GO111MODULE=on
+    go env -w GOPROXY="https://goproxy.cn,direct"
+    ```
 
 ## neovim
 > 本来一直在用vim，neovim更加友好就决定迁移了
@@ -77,14 +97,18 @@ tags:
 > 2. 配置目录: neovim $XDG_CONFIG_HOME/nvim/init.vim 和$XDG_CONFIG_HOME/nvim, vim 为$HOME/.vimrc
 - 安装
 
-        sudo apt install neovim
+    ```bash
+    sudo apt install neovim
+    ```
 - 用SpaceVim配置 [SpaceVim中文文档](https://spacevim.org/cn/)
 > 什么? 为什么不自己配？ 
 > : 我懒😎
 
 1. 安装     
   
-        curl -sLf https://spacevim.org/cn/install.sh | bash 
+    ```bash
+    curl -sLf https://spacevim.org/cn/install.sh | bash 
+    ```
 2. 把 vi 或 vim 转为使用 neovim 
 > 你以为我在用 vim， 实际上我用的是 neovim 😎
 
@@ -92,6 +116,6 @@ tags:
         alias vi='nvim'
         alias vim='nvim'
         source ~/.zshrc
-        
 
-    
+
+​    
