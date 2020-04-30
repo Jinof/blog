@@ -100,7 +100,7 @@ tags:
     ```bash
     sudo apt install neovim
     ```
-    
+
 - 用SpaceVim配置 [SpaceVim中文文档](https://spacevim.org/cn/)
 > 什么? 为什么不自己配？ 
 > : 我懒😎
