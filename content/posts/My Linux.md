@@ -77,7 +77,7 @@ tags:
 - 解压
 
     ```bash
-    tar -C /usr/local -zxvf go1.4.2.linux-amd64.tar.gz
+    tar -C /usr/local -zxvf go1.14.2.linux-amd64.tar.gz
     ```
 - 配置go环境变量, 将一下两行追加至`/etc/profile`中
         
