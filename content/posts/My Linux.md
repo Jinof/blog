@@ -13,6 +13,7 @@ tags:
   - oh-my-zsh
   - ssh
   - spacevim
+  - mysql
 ---
 
 # 记录下每次配环境的操作，减少环境配置时间
