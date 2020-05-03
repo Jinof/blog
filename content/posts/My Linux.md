@@ -21,6 +21,7 @@ tags:
 - [ssh](#ssh)
 - [golang](#golang)
 - [neovim/spacevim](#neovim)
+- [mysql](#mysql)
 ***
 ## zsh
 - 安装 git 与 zsh
@@ -118,5 +119,37 @@ tags:
         alias vim='nvim'
         source ~/.zshrc
 
+## Mysql
 
-​    
+- 安装
+
+  ```bash
+  sudo apt install mysql-server
+  ```
+
+- 配置文件修改
+
+  ~~~bash
+  vim /etc/mysql/mysql.conf.d/mysqld.cnf
+  
+  # 修改如下
+  
+  # bind-address = 127.0.0.1
+  ~~~
+
+  
+
+- 用户配置
+
+  ~~~mysql
+  use mysql;
+  # 修改密码
+  alter user `root`@`localhost` identified with mysql_native_password by 'zjygogogo';
+  
+  # 设置远程访问
+  update user set host=`%` where user=`root`;
+  
+  #刷新权限
+  flush privileges;
+  ~~~
+
