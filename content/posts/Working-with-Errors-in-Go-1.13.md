@@ -77,3 +77,66 @@ if e, ok := err.(*NotFoundError); ok {
 }
 ```
 
+### Adding information
+
+通常情况下, 函数将 `error` 上抛至栈的顶层的同时向其中添加信息, 比如, 一段对错误发生状况的简短描述. 构造一个新的 `errror` 的简单方法就是包含前一个 `error` 的文本:
+
+~~~go
+if err != nil {
+    return fmt.Errorf("decompress %v: %v", name, err)
+}
+~~~
+
+通过 `fmt.Errorf` 创建一个新的 `error` 会对其原 `error` 中文本之外的所有信息. 正如上面我们看到的 `QueryError` , 有时候我们想要定义一个包含底层 `error` 的新 `error` 类型, 并将其保存以供代码检查. 这里 `QueryError` 再次登场:	
+
+~~~go
+type QueryError struct {
+    Query string
+    Err   error
+}
+~~~
+
+程序可以检查 `*QueryError` 内部的值, 根据底层的 `error` 来做判断. 你有时候可以把这看作展开 `error` .
+
+```go
+if e, ok := err.(*QueryError); ok && e.Err == ErrPermission {
+    // query failed because of a permission problem
+}
+```
+
+#### Errors in Go 1.13
+
+#### The Unwrap method
+
+Go 1.13 介绍了  `errors` 和 `fmt` 标准库的新特性以简化对包含其他`errors` 的 `errors` 的处理. 其中最有效的是约定而不是更改:  一个包含其他`error` 的 `error` 可以实现一个 `Unwrap` 方法, 返回底层的 `error` . 如果 `e1.Unwrap()` 返回 `e2` , 那么我们称 `e1` 包装了 `e2` , 并且你可以展开 `e1` 以得到 `e2` .
+
+```go
+func (e *QueryError) Unwrap() error { return e.Err }
+```
+
+展开一个 `error` 的结果可能也有一个 `Unwrap` 方法; 我们可以调用从 `error` 链中展开的一系列 `errors`
+
+#### Examining errors with Is and As
+
+Go1.13 中 `errors` 包括了两个检验 `errors` 的新函数: `Is` 和 `As` .
+
+The `errors.Is` 函数将 `error` 和一个 `value` 比较 .
+
+```go
+// Similar to:
+//   if err == ErrNotFound { ... }
+if errors.Is(err, ErrNotFound) {
+    // something wasn't found
+}
+```
+
+`As` 函数测试 `error` 是不是特定的类型 .
+
+```go
+// Similar to:
+//   if e, ok :== err.(*QueryError); ok { ... }
+var e *QueryError
+if errors.As(err, &e) {
+    // err is a *QueryError, and e is set to the error's value
+}
+```
