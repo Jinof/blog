@@ -1,7 +1,7 @@
 ---
 title: "go-socket.io 源码分析"
 date: 2020-06-07T23:53:22+08:00
-draft: true
+draft: false
 toc: false
 images:
 tags:
@@ -10,7 +10,7 @@ tags:
   - websocket
 ---
 
-go-socket.io 的源码很简单，读起来其实不费力（因为API很少）
+go-socket.io 的源码很简单，读起来其实不费力（因为API很少👀）
 
 先自顶向下看看我们启动一个 socket io server 都经过了哪些流程。
 
@@ -39,7 +39,7 @@ func NewServer(c *engineio.Options) (*Server, error) {
 }
 ```
 
-NewServer 首先调用 go-engine.io 中的 NewServer， 将得到的 eio 赋值给了 Server{}，并返回该 Server 的指针。（这才是代码少真正的原因，很多实现都是在 go-engine.io 库里）
+NewServer 首先调用 go-engine.io 中的 NewServer， 将得到的 eio 赋值给了 Server{}，并返回该 Server 的指针。（这才是代码少真正的原因😂，很多实现都是在 go-engine.io 库里）
 
 这里我们仅关注 Server 中的 handlers，毕竟 eio 是另一个库的。
 
@@ -119,3 +119,6 @@ func (h *namespaceHandler) OnError(f func(Conn, error)) {
 ~~~
 
 OnDisconnect 和 OnError 与 onConnect 是同样的实现方法。
+
+以上我们已经了解了 handlers 的作用之一 **储存 nsp 和 与之对应的 func**
+
