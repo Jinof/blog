@@ -10,9 +10,11 @@ tags:
   - websocket
 ---
 
-go-socket.io 的源码很简单，读起来其实不费力（因为API很少👀）
+go-socket.io 的源码很简单，读起来其实不费力（因为API很少）
 
 先自顶向下看看我们启动一个 socket io server 都经过了哪些流程。
+
+先看看 server 启动前调用的 api👀
 
 ```go
 import (
@@ -120,5 +122,50 @@ func (h *namespaceHandler) OnError(f func(Conn, error)) {
 
 OnDisconnect 和 OnError 与 onConnect 是同样的实现方法。
 
-以上我们已经了解了 handlers 的作用之一 **储存 nsp 和 与之对应的 func**
+以上我们已经了解了 handlers 的作用之一 ：**储存 nsp 和 与之对应的 func**
 
+OnEvent 与其他三个的方法相同，只是要存储许多 events 所以 namespaceHandler 中 events 字段采用了 map[string]*funchandler 的数据结构。
+
+```go
+type namespaceHandler struct {
+	---
+	events       map[string]*funcHandler
+    ---
+}
+
+func (h *namespaceHandler) OnEvent(event string, f interface{}) {
+	h.events[event] = newEventFunc(f)
+}
+```
+
+创建 events 时，将 event 作为key, 相应的 func 作为 value 插入 map 中。
+
+newEventFunc 函数位于 handler.go 文件中，具体实现如下：
+
+```go
+func newEventFunc(f interface{}) *funcHandler {
+	fv := reflect.ValueOf(f)
+    // 判断该 reflect 的类型是否为 func
+	if fv.Kind() != reflect.Func {
+		panic("event handler must be a func.")
+	}
+	ft := fv.Type()
+    // 判断参数的个数是否小于 1， 和参数的类型是否为 Coon
+	if ft.NumIn() < 1 || ft.In(0).Name() != "Conn" {
+		panic("handler function should be like func(socketio.Conn, ...)")
+	}
+	argTypes := make([]reflect.Type, ft.NumIn()-1)
+	for i := range argTypes {
+		argTypes[i] = ft.In(i + 1)
+	}
+	if len(argTypes) == 0 {
+		argTypes = nil
+	}
+	return &funcHandler{
+		argTypes: argTypes,
+		f:        fv,
+	}
+}
+```
+
+以上就是 go-socket.io 启动前调用的 api 代码了，后面的下次一定😴。
