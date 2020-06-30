@@ -39,7 +39,7 @@ theme = "hello-friend-ng"
         title = "Jinof"
         homeSubtitle = "Share to the World"
         keywords = ""
-        copyright = ""
+        copyright = '<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
         readOtherPosts = "Read other posts"
 
         [languages.en.params.logo]
