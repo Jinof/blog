@@ -84,6 +84,8 @@ tags:
     ```bash
     export GOROOT=/usr/local/go
     export PATH=$PATH:$GOROOT/bin
+    export GOPATH=$(go env GOPATH)
+    export PATH=$PATH:$GOPATH/bin
     ```
 - 配置go环境
 
