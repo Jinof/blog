@@ -95,10 +95,12 @@ tags:
     ```
 
 ## neovim
-> 本来一直在用vim，neovim更加友好就决定迁移了
+> 本来一直在用 vim，neovim 更加友好就决定迁移了
 > - 一些改变:
-> 1. 默认encoding: neovim `utf-8`, vim `latin1`
+> 1. 默认 encoding: neovim `utf-8`, vim `latin1`
 > 2. 配置目录: neovim $XDG_CONFIG_HOME/nvim/init.vim 和$XDG_CONFIG_HOME/nvim, vim 为$HOME/.vimrc
+> 3. `:version` 查看 neovim 版本信息, `:checkhealth` 查看 neovim 健康状态, `:help init.vim` 查看 neovim 配置文件相关信息.
+> 4. Windows 下 `scooop install neovim`, `:help init.vim` 发现目录在  `~/AppData/Local/nvim/init.vim`, 而官网的 install.cmd 会将 [SpaceVim](https://github.com/SpaceVim/SpaceVim) clone 到 ~./.SpaceVim 目录下(install.cmd 有创建`$HOME\.SpaceVim` -> `$HOME\AppData\Local\nvim` 的软链接的, 但似乎没创建成功), 所以 neovim 无法正确读取配置. 可以通过手动 `git clone https://github.com/SpaceVim/SpaceVim.git $HOME/AppData/Local/nvim` 来解决.
 - 安装
 
     ```bash
@@ -126,33 +128,33 @@ tags:
 
 - 安装
 
-  ```bash
-  sudo apt install mysql-server
-  ```
+    ```bash
+    sudo apt install mysql-server
+    ```
 
 - 配置文件修改
 
-  ~~~bash
-  vim /etc/mysql/mysql.conf.d/mysqld.cnf
+    ~~~bash
+    vim /etc/mysql/mysql.conf.d/mysqld.cnf
   
-  # 修改如下
+    # 修改如下
   
-  # bind-address = 127.0.0.1
-  ~~~
+    # bind-address = 127.0.0.1
+    ~~~
 
   
 
 - 用户配置
 
-  ~~~mysql
-  use mysql;
-  # 修改密码
-  alter user `root`@`localhost` identified with mysql_native_password by 'zjygogogo';
+    ~~~mysql
+    use mysql;
+    # 修改密码
+    alter user `root`@`localhost` identified with mysql_native_password by 'zjygogogo';
   
-  # 设置远程访问
-  update user set host=`%` where user=`root`;
+    # 设置远程访问
+    update user set host=`%` where user=`root`;
   
-  #刷新权限
-  flush privileges;
-  ~~~
+    #刷新权限
+    flush privileges;
+    ~~~
 
