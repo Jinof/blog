@@ -1,3 +1,10 @@
 baseURL = 'https://blog.jinof.vercel.app'
 languageCode = 'en-us'
 title = "Jinof's Blog"
+
+[frontmatter]
+  date = ["date", "publishDate", "lastmod"]
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"

@@ -1,0 +1,10 @@
+{{ define "main" }}
+{{ $pages := where .Site.RegularPages "Section" "posts" }}
+<ul class="post-list">
+    {{ range $pages.ByDate.Reverse }}
+    <li class="post-item">
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    </li>
+    {{ end }}
+</ul>
+{{ end }}
