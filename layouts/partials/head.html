@@ -1,0 +1,6 @@
+{{- /* NOTE: This override fixes the .Site.Author bug in hello-friend-ng theme */ -}}
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="{{ if .Params.author }}{{ .Params.author }}{{ else }}{{ with .Site.Author }}{{ .name }}{{ end }}{{ end }}">
+<meta name="description" content="{{ if .IsHome }}{{ .Site.Params.homeSubtitle }}{{ else }}{{ .Description | default ( .Summary | plainify ) }}{{ end }}" />
+<meta name="keywords" content="{{ .Site.Params.keywords }}{{ if .Params.tags }}{{ range .Params.tags }}, {{ . }}{{ end }}{{ end }}" />
