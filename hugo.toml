@@ -1,6 +1,7 @@
 baseURL = 'https://blog.jinof.vercel.app'
 languageCode = 'en-us'
 title = "Jinof's Blog"
+theme = "mytheme"
 
 [frontmatter]
   date = ["date", "publishDate", "lastmod"]
