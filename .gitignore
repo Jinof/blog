@@ -1,3 +1,5 @@
 .env
 .env.build
+.DS_Store
 public
+target

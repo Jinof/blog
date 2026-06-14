@@ -1,0 +1,27 @@
+[package]
+name = "jinof-blog"
+version = "0.1.0"
+edition = "2021"
+default-run = "jinof-blog"
+
+[dependencies]
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+bevy = { version = "0.18.1", default-features = false, features = [
+    "bevy_asset",
+    "bevy_core_pipeline",
+    "bevy_render",
+    "bevy_sprite",
+    "bevy_sprite_render",
+    "bevy_state",
+    "bevy_winit",
+    "webgl2",
+] }
+bevy_ecs = "0.18.1"
+
+[profile.release]
+codegen-units = 1
+lto = "thin"
+opt-level = "z"
+panic = "abort"
+strip = "debuginfo"
