@@ -23,12 +23,11 @@ This is a personal static blog deployed to Vercel (https://blog.jinof.vercel.app
 - `src/main.rs` - Dependency-free Rust build and local preview tool
 - `src/bin/home_bevy.rs` - Bevy/WebAssembly homepage scene
 - `/` - Animation-only Bevy homepage with a link to `/posts/`
-- `/posts/` - Post index page for new Markdown posts
-- `posts/` - New Markdown posts included by the Rust build tool
+- `/posts/` - Post index page for Markdown posts
+- `posts/` - All Markdown posts included by the Rust build tool
 - `assets/` - New static assets copied into `public/`
-- `content/` - Legacy Hugo-era Markdown archive; non-draft Markdown documents are shown under `/posts/`
 - `public/` - Generated static site output, ignored by git
 
 ## Blog Post Format
 
-Posts in `posts/` and archived Markdown documents in `content/` use frontmatter with fields like title, date, draft, and tags.
+Posts in `posts/` use frontmatter with fields like title, date, draft, and tags.

@@ -562,17 +562,14 @@ fn json_string(source: &str, key: &str) -> Option<String> {
 fn read_site_pages(root: &Path) -> Result<Vec<Page>, String> {
     let mut by_route = BTreeMap::new();
 
-    for page in read_pages(&root.join("content"), true)? {
-        by_route.insert(page.route.clone(), page);
-    }
-    for page in read_pages(&root.join("posts"), false)? {
+    for page in read_pages(&root.join("posts"))? {
         by_route.insert(page.route.clone(), page);
     }
 
     Ok(by_route.into_values().collect())
 }
 
-fn read_pages(content_dir: &Path, strip_archive_posts_prefix: bool) -> Result<Vec<Page>, String> {
+fn read_pages(content_dir: &Path) -> Result<Vec<Page>, String> {
     if !content_dir.exists() {
         return Ok(Vec::new());
     }
@@ -581,7 +578,7 @@ fn read_pages(content_dir: &Path, strip_archive_posts_prefix: bool) -> Result<Ve
     collect_markdown_files(content_dir, &mut files)?;
     files
         .into_iter()
-        .map(|file| read_page(content_dir, &file, strip_archive_posts_prefix))
+        .map(|file| read_page(content_dir, &file))
         .collect()
 }
 
@@ -609,16 +606,11 @@ fn is_markdown_document(path: &Path) -> bool {
 
     match path.extension().and_then(|ext| ext.to_str()) {
         Some("md" | "markdown") => true,
-        Some(_) => false,
-        None => true,
+        _ => false,
     }
 }
 
-fn read_page(
-    content_dir: &Path,
-    file: &Path,
-    strip_archive_posts_prefix: bool,
-) -> Result<Page, String> {
+fn read_page(content_dir: &Path, file: &Path) -> Result<Page, String> {
     let source =
         fs::read_to_string(file).map_err(|error| format!("read {}: {error}", file.display()))?;
     let (frontmatter, body) = parse_frontmatter(&source);
@@ -637,7 +629,7 @@ fn read_page(
     let tags = frontmatter.lists.get("tags").cloned().unwrap_or_default();
 
     Ok(Page {
-        route: route_for(content_dir, file, strip_archive_posts_prefix)?,
+        route: route_for(content_dir, file)?,
         title,
         date_text,
         sort_key,
@@ -712,11 +704,7 @@ fn parse_scalar(value: &str) -> String {
     }
 }
 
-fn route_for(
-    content_dir: &Path,
-    file: &Path,
-    strip_archive_posts_prefix: bool,
-) -> Result<String, String> {
+fn route_for(content_dir: &Path, file: &Path) -> Result<String, String> {
     let relative = file
         .strip_prefix(content_dir)
         .map_err(|error| error.to_string())?;
@@ -725,9 +713,6 @@ fn route_for(
     if let Some(parent) = relative.parent() {
         for part in parent.components() {
             let slug = slugify(&part.as_os_str().to_string_lossy());
-            if strip_archive_posts_prefix && parts.is_empty() && slug == "posts" {
-                continue;
-            }
             parts.push(slug);
         }
     }
@@ -1442,7 +1427,6 @@ fn heading_id(markdown: &str) -> String {
 
 fn source_signature(root: &Path) -> Result<String, String> {
     let mut files = Vec::new();
-    collect_all_files(&root.join("content"), &mut files)?;
     collect_all_files(&root.join("posts"), &mut files)?;
     collect_all_files(&root.join("assets"), &mut files)?;
     collect_all_files(&root.join("src"), &mut files)?;
