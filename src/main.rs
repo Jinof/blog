@@ -181,13 +181,43 @@ body {
     border: none;
     background: transparent;
     color: transparent;
-    font-size: 0;
     text-decoration: none;
     cursor: pointer;
     outline: none;
 }
 .home-entry-link:hover {
     background: transparent;
+}
+.book-page {
+    position: absolute;
+    left: calc(50% - 26.5px);
+    top: calc(50% + 3px);
+    transform: translate(-50%, -50%) rotate(-6.875deg);
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    color: #1a1c1f;
+    font-family: Georgia, "Times New Roman", "Songti SC", "STSong", "SimSun", serif;
+    cursor: pointer;
+}
+.book-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    padding-top: 4px;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1.3;
+    word-break: break-word;
+}
+.book-date {
+    display: block;
+    margin-top: 3px;
+    font-size: 7px;
+    line-height: 1.2;
+    color: rgba(26, 28, 31, 0.7);
+    white-space: nowrap;
 }
 "#;
 
@@ -273,7 +303,8 @@ fn build_site(root: &Path, include_drafts: bool) -> Result<(), String> {
         )?;
     }
 
-    write_public_file(&public_dir, "/index.html", &render_index(&config))?;
+    let latest = pages.first();
+    write_public_file(&public_dir, "/index.html", &render_index(&config, latest))?;
     write_public_file(
         &public_dir,
         "/posts/index.html",
@@ -878,8 +909,11 @@ fn render_shell(config: &Config, title: &str, canonical_path: &str, main: &str) 
     )
 }
 
-fn render_index(config: &Config) -> String {
+fn render_index(config: &Config, latest: Option<&Page>) -> String {
     let canonical = absolute_url(config, "/");
+    let (book_title, book_date) = latest
+        .map(|page| (page.title.as_str(), page.date_text.as_str()))
+        .unwrap_or(("", ""));
 
     format!(
         r#"<!DOCTYPE html>
@@ -896,7 +930,7 @@ fn render_index(config: &Config) -> String {
 <body class="home-page">
 <main class="home-stage" aria-label="Interactive Bevy homepage">
     <canvas id="bevy-home-canvas"></canvas>
-    <a class="home-entry-link" href="/posts/" aria-label="Posts">Posts</a>
+    <a class="home-entry-link" href="/posts/" aria-label="Posts"><span class="book-page"><span class="book-title">{book_title}</span><span class="book-date">{book_date}</span></span></a>
 </main>
 <script type="module">
 try {{
@@ -912,6 +946,8 @@ try {{
         language = escape_attr(&config.language_code),
         page_title = escape_html(&config.title),
         canonical = escape_attr(&canonical),
+        book_title = escape_html(book_title),
+        book_date = escape_html(book_date),
         style = HOME_STYLE.trim()
     )
 }

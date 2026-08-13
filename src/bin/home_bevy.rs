@@ -131,10 +131,8 @@ fn spawn_book(commands: &mut Commands) {
             spawn_child_line(parent, Vec2::new(3.0, -20.0), Vec2::new(50.0, -20.0), 1.5, 3.0, page_edge);
             spawn_child_line(parent, Vec2::new(3.0, 24.0), Vec2::new(50.0, 24.0), 1.5, 3.0, page_edge);
 
-            // Lines of text on the pages.
-            spawn_child_line(parent, Vec2::new(-46.0, 16.0), Vec2::new(-12.0, 16.0), 2.0, 4.0, text_ink);
-            spawn_child_line(parent, Vec2::new(-46.0, 10.0), Vec2::new(-12.0, 10.0), 2.0, 4.0, text_ink);
-            spawn_child_line(parent, Vec2::new(-46.0, 4.0), Vec2::new(-22.0, 4.0), 2.0, 4.0, text_ink);
+            // Lines of text on the right page (the left page carries the real
+            // latest-post title and date rendered by the page itself).
             spawn_child_line(parent, Vec2::new(12.0, 16.0), Vec2::new(46.0, 16.0), 2.0, 4.0, text_ink);
             spawn_child_line(parent, Vec2::new(12.0, 10.0), Vec2::new(46.0, 10.0), 2.0, 4.0, text_ink);
             spawn_child_line(parent, Vec2::new(12.0, 4.0), Vec2::new(38.0, 4.0), 2.0, 4.0, text_ink);
