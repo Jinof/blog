@@ -68,6 +68,8 @@ fn setup(mut commands: Commands) {
     spawn_line(&mut commands, left_knee, left_foot, 6.5, 4.0, ink);
     spawn_line(&mut commands, pelvis, right_knee, 6.5, 4.0, ink);
     spawn_line(&mut commands, right_knee, right_foot, 6.5, 4.0, ink);
+
+    spawn_book(&mut commands);
 }
 
 fn spawn_head(commands: &mut Commands, center: Vec2, radius: f32, color: Color) {
@@ -86,6 +88,65 @@ fn spawn_head(commands: &mut Commands, center: Vec2, radius: f32, color: Color) 
     }
 }
 
+fn spawn_book(commands: &mut Commands) {
+    let ink = Color::srgb(0.08, 0.09, 0.10);
+    let paper = Color::srgb(0.965, 0.949, 0.898);
+    let page_edge = Color::srgba(0.08, 0.09, 0.10, 0.55);
+    let text_ink = Color::srgba(0.08, 0.09, 0.10, 0.5);
+
+    commands
+        .spawn(Transform {
+            translation: Vec3::new(95.0, 118.0, 5.0),
+            rotation: Quat::from_rotation_z(0.12),
+            ..default()
+        })
+        .with_children(|parent| {
+            // Cover.
+            parent.spawn((
+                Sprite::from_color(ink, Vec2::new(110.0, 58.0)),
+                Transform::from_xyz(0.0, -4.0, 0.0),
+            ));
+
+            // Open pages.
+            parent.spawn((
+                Sprite::from_color(paper, Vec2::new(47.0, 42.0)),
+                Transform::from_xyz(-26.5, 2.0, 1.0),
+            ));
+            parent.spawn((
+                Sprite::from_color(paper, Vec2::new(47.0, 42.0)),
+                Transform::from_xyz(26.5, 2.0, 1.0),
+            ));
+
+            // Spine.
+            parent.spawn((
+                Sprite::from_color(ink, Vec2::new(5.0, 44.0)),
+                Transform::from_xyz(0.0, 2.0, 2.0),
+            ));
+
+            // Page outlines.
+            spawn_child_line(parent, Vec2::new(-50.0, -20.0), Vec2::new(-50.0, 24.0), 1.5, 3.0, page_edge);
+            spawn_child_line(parent, Vec2::new(-50.0, -20.0), Vec2::new(-3.0, -20.0), 1.5, 3.0, page_edge);
+            spawn_child_line(parent, Vec2::new(-50.0, 24.0), Vec2::new(-3.0, 24.0), 1.5, 3.0, page_edge);
+            spawn_child_line(parent, Vec2::new(50.0, -20.0), Vec2::new(50.0, 24.0), 1.5, 3.0, page_edge);
+            spawn_child_line(parent, Vec2::new(3.0, -20.0), Vec2::new(50.0, -20.0), 1.5, 3.0, page_edge);
+            spawn_child_line(parent, Vec2::new(3.0, 24.0), Vec2::new(50.0, 24.0), 1.5, 3.0, page_edge);
+
+            // Lines of text on the pages.
+            spawn_child_line(parent, Vec2::new(-46.0, 16.0), Vec2::new(-12.0, 16.0), 2.0, 4.0, text_ink);
+            spawn_child_line(parent, Vec2::new(-46.0, 10.0), Vec2::new(-12.0, 10.0), 2.0, 4.0, text_ink);
+            spawn_child_line(parent, Vec2::new(-46.0, 4.0), Vec2::new(-22.0, 4.0), 2.0, 4.0, text_ink);
+            spawn_child_line(parent, Vec2::new(12.0, 16.0), Vec2::new(46.0, 16.0), 2.0, 4.0, text_ink);
+            spawn_child_line(parent, Vec2::new(12.0, 10.0), Vec2::new(46.0, 10.0), 2.0, 4.0, text_ink);
+            spawn_child_line(parent, Vec2::new(12.0, 4.0), Vec2::new(38.0, 4.0), 2.0, 4.0, text_ink);
+
+            // Bookmark ribbon.
+            parent.spawn((
+                Sprite::from_color(Color::srgba(0.08, 0.09, 0.10, 0.9), Vec2::new(3.0, 16.0)),
+                Transform::from_xyz(1.0, 30.0, 4.0),
+            ));
+        });
+}
+
 fn spawn_line(
     commands: &mut Commands,
     start: Vec2,
@@ -95,6 +156,20 @@ fn spawn_line(
     color: Color,
 ) {
     commands.spawn((
+        Sprite::from_color(color, Vec2::new(1.0, 1.0)),
+        line_transform(start, end, thickness, z),
+    ));
+}
+
+fn spawn_child_line(
+    parent: &mut ChildSpawnerCommands,
+    start: Vec2,
+    end: Vec2,
+    thickness: f32,
+    z: f32,
+    color: Color,
+) {
+    parent.spawn((
         Sprite::from_color(color, Vec2::new(1.0, 1.0)),
         line_transform(start, end, thickness, z),
     ));

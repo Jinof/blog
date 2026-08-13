@@ -172,27 +172,22 @@ body {
 }
 .home-entry-link {
     position: absolute;
-    right: 1.25rem;
-    bottom: 1.25rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 5rem;
-    min-height: 2.5rem;
-    padding: 0 1rem;
-    border: 1px solid rgba(26, 28, 31, 0.22);
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.72);
-    color: #1a1c1f;
-    font-size: 0.95rem;
-    font-weight: 600;
+    left: calc(50% + 95px);
+    top: calc(50% - 118px);
+    transform: translate(-50%, -50%);
+    display: block;
+    width: 134px;
+    height: 94px;
+    border: none;
+    background: transparent;
+    color: transparent;
+    font-size: 0;
     text-decoration: none;
-    text-shadow: none;
-    backdrop-filter: blur(10px);
+    cursor: pointer;
+    outline: none;
 }
 .home-entry-link:hover {
-    background: rgba(26, 28, 31, 0.08);
-    color: #000;
+    background: transparent;
 }
 "#;
 
@@ -901,7 +896,7 @@ fn render_index(config: &Config) -> String {
 <body class="home-page">
 <main class="home-stage" aria-label="Interactive Bevy homepage">
     <canvas id="bevy-home-canvas"></canvas>
-    <a class="home-entry-link" href="/posts/">Posts</a>
+    <a class="home-entry-link" href="/posts/" aria-label="Posts">Posts</a>
 </main>
 <script type="module">
 try {{
