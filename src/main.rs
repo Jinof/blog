@@ -139,6 +139,33 @@ footer {
 .empty-state {
     color: #666;
 }
+.lab-entry {
+    display: grid;
+    gap: 0.3rem;
+    margin-bottom: 2.25rem;
+    padding: 1rem 1.15rem;
+    border: 1px solid #d8e3df;
+    background: #f4faf7;
+    color: #183d32;
+    text-decoration: none;
+}
+.lab-entry:hover {
+    border-color: #1a8a68;
+}
+.lab-entry-kicker {
+    color: #1a8a68;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.lab-entry strong {
+    font-size: 1.15rem;
+}
+.lab-entry > span:last-child {
+    color: #4d655e;
+    font-size: 0.9rem;
+}
 "#;
 
 const HOME_STYLE: &str = r#"
@@ -220,6 +247,8 @@ body {
     white-space: nowrap;
 }
 "#;
+
+const TCP_THROUGHPUT_ROUTE: &str = "/labs/tcp-throughput/";
 
 #[derive(Clone)]
 struct Config {
@@ -320,6 +349,11 @@ fn build_site(root: &Path, include_drafts: bool) -> Result<(), String> {
         &public_dir,
         "/tags/index.html",
         &render_tag_index(&config, &tags),
+    )?;
+    write_public_file(
+        &public_dir,
+        "/labs/tcp-throughput/index.html",
+        &render_tcp_throughput_lab(&config),
     )?;
 
     for tag in &tags {
@@ -953,7 +987,7 @@ try {{
 }
 
 fn render_post_index(config: &Config, pages: &[Page]) -> String {
-    let main = if pages.is_empty() {
+    let post_list = if pages.is_empty() {
         "<p class=\"empty-state\">No posts yet.</p>".to_string()
     } else {
         let items = pages
@@ -975,7 +1009,65 @@ fn render_post_index(config: &Config, pages: &[Page]) -> String {
         format!("<ul class=\"post-list\">\n{items}\n</ul>")
     };
 
+    let main = format!(
+        r#"<a class="lab-entry" href="{lab_route}">
+    <span class="lab-entry-kicker">Interactive lab</span>
+    <strong>TCP 吞吐量实验室</strong>
+    <span>调节 ping，观察 TCP 滑动窗口与 HTTP POST 的传输速度 →</span>
+</a>
+{post_list}"#,
+        lab_route = TCP_THROUGHPUT_ROUTE,
+        post_list = post_list
+    );
+
     render_shell(config, "Posts", "/posts/", &main)
+}
+
+fn render_tcp_throughput_lab(config: &Config) -> String {
+    let canonical = absolute_url(config, TCP_THROUGHPUT_ROUTE);
+
+    format!(
+        r#"<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="调整 Ping / RTT，观察 TCP 滑动窗口和 HTTP POST 的传输速度曲线。">
+    <title>TCP 吞吐量实验室 | {site_title}</title>
+    <link rel="canonical" href="{canonical}">
+    <link rel="stylesheet" href="/labs/tcp-throughput/lab.css">
+</head>
+<body>
+    <main class="tcp-lab" id="tcp-lab">
+        <figure class="throughput-figure">
+            <svg id="throughput-chart" role="img" aria-label="Ping / RTT 对 TCP 滑动窗口和 HTTP POST 有效传输速度的影响折线图"></svg>
+            <figcaption class="sr-only">拖动 Ping / RTT 选择框，查看 IW10 慢启动和 ACK 滑动窗口传输 8 MiB TCP 数据，以及相同连接上传 8 MiB HTTP POST 数据并等待响应的有效速度。</figcaption>
+        </figure>
+
+        <div class="chart-footer">
+            <label class="ping-picker" for="rtt">
+                <span>Ping / RTT</span>
+                <input id="rtt" type="range" min="1" max="300" step="1" value="32">
+                <output id="rtt-output" for="rtt">32 ms</output>
+            </label>
+
+            <div class="rtt-formula" aria-label="RTT 等于收到 Echo Reply 的时间减去发出 Echo Request 的时间">
+                <span class="formula-name">RTT</span>
+                <span>=</span>
+                <span><i>t</i>(Echo Reply 收到)</span>
+                <span>−</span>
+                <span><i>t</i>(Echo Request 发出)</span>
+            </div>
+        </div>
+    </main>
+    <script src="/labs/tcp-throughput/model.js"></script>
+    <script src="/labs/tcp-throughput/lab.js"></script>
+</body>
+</html>
+"#,
+        site_title = escape_html(&config.title),
+        canonical = escape_attr(&canonical)
+    )
 }
 
 fn render_article(config: &Config, page: &Page) -> String {
@@ -1110,6 +1202,7 @@ fn render_feed(config: &Config, pages: &[Page]) -> String {
 
 fn render_sitemap(config: &Config, pages: &[Page], tags: &[TagPage]) -> String {
     let mut routes = vec!["/".to_string(), "/posts/".to_string()];
+    routes.push(TCP_THROUGHPUT_ROUTE.to_string());
     routes.extend(pages.iter().map(|page| page.route.clone()));
     routes.push("/tags/".to_string());
     routes.extend(tags.iter().map(|tag| tag.route.clone()));

@@ -1,0 +1,11 @@
+[package]
+name = "tcp-http-lab-router"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true

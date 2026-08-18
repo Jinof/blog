@@ -1,0 +1,249 @@
+:root {
+    --background: #0b100e;
+    --foreground: #e9f1ed;
+    --muted: #7f8c86;
+    --border: #28332f;
+    --grid: rgba(127, 140, 134, 0.14);
+    --series: #bdff36;
+    --series-post: #69c8ff;
+    --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-width: 320px;
+    min-height: 100%;
+}
+
+body {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--sans);
+}
+
+.tcp-lab {
+    display: grid;
+    gap: 22px;
+    width: min(1120px, 100%);
+    padding: clamp(28px, 6vw, 72px) clamp(18px, 5vw, 56px);
+}
+
+.chart-footer {
+    margin-inline: 78px 18px;
+}
+
+.ping-picker {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: center;
+}
+
+.ping-picker > span {
+    color: var(--muted);
+    font: 500 13px/1 var(--sans);
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+}
+
+.ping-picker output {
+    color: var(--series);
+    font: 500 15px/1 var(--mono);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+}
+
+.ping-picker input {
+    min-width: 0;
+    width: 100%;
+    height: 4px;
+    appearance: none;
+    border: 0;
+    border-radius: 0;
+    background: linear-gradient(
+        90deg,
+        var(--series) 0 var(--range-progress, 10.4%),
+        var(--border) var(--range-progress, 10.4%) 100%
+    );
+    cursor: pointer;
+}
+
+.ping-picker input::-webkit-slider-thumb {
+    width: 12px;
+    height: 20px;
+    appearance: none;
+    border: 0;
+    border-radius: 0;
+    background: var(--series);
+}
+
+.ping-picker input::-moz-range-thumb {
+    width: 12px;
+    height: 20px;
+    border: 0;
+    border-radius: 0;
+    background: var(--series);
+}
+
+.ping-picker input:focus-visible {
+    outline: 2px solid var(--foreground);
+    outline-offset: 6px;
+}
+
+.rtt-formula {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 8px;
+    align-items: baseline;
+    margin-top: 18px;
+    color: var(--muted);
+    font: 400 12px/1.5 var(--mono);
+}
+
+.rtt-formula .formula-name,
+.rtt-formula > span:nth-child(2) {
+    color: var(--foreground);
+    font-weight: 500;
+}
+
+.rtt-formula i {
+    font-family: Georgia, serif;
+}
+
+.throughput-figure {
+    min-width: 0;
+    margin: 0;
+}
+
+#throughput-chart {
+    display: block;
+    width: 100%;
+    min-height: 500px;
+    overflow: visible;
+}
+
+.chart-frame,
+.chart-grid,
+.chart-guide,
+.chart-line,
+.chart-legend-line {
+    vector-effect: non-scaling-stroke;
+}
+
+.chart-frame {
+    fill: none;
+    stroke: var(--border);
+}
+
+.chart-grid {
+    stroke: var(--grid);
+}
+
+.chart-axis,
+.chart-axis-title,
+.chart-point-label,
+.chart-legend {
+    font-family: var(--mono);
+    font-size: 11px;
+}
+
+.chart-axis,
+.chart-axis-title {
+    fill: var(--muted);
+}
+
+.chart-axis-title {
+    letter-spacing: 0.06em;
+}
+
+.chart-line {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.chart-line-tcp,
+.chart-legend-line-tcp {
+    stroke: var(--series);
+}
+
+.chart-line-post,
+.chart-legend-line-post {
+    stroke: var(--series-post);
+}
+
+.chart-legend-line {
+    stroke-width: 3;
+}
+
+.chart-legend text {
+    fill: var(--muted);
+}
+
+.chart-guide {
+    stroke: var(--series);
+    stroke-width: 1;
+    opacity: 0.6;
+}
+
+.chart-marker {
+    fill: var(--background);
+    stroke-width: 3;
+    vector-effect: non-scaling-stroke;
+}
+
+.chart-marker-tcp {
+    stroke: var(--series);
+}
+
+.chart-marker-post {
+    stroke: var(--series-post);
+}
+
+.chart-point-label {
+    fill: var(--foreground);
+}
+
+.chart-point-label-post {
+    fill: var(--series-post);
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (max-width: 520px) {
+    .tcp-lab {
+        gap: 18px;
+    }
+
+    .chart-footer {
+        margin-inline: 58px 8px;
+    }
+
+    .ping-picker {
+        gap: 10px;
+    }
+
+    #throughput-chart {
+        min-height: 360px;
+    }
+}
