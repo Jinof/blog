@@ -139,18 +139,19 @@ footer {
 .empty-state {
     color: #666;
 }
-.lab-entry {
+.post-item a.lab-entry {
     display: grid;
     gap: 0.3rem;
-    margin-bottom: 2.25rem;
+    margin-top: 0.75rem;
     padding: 1rem 1.15rem;
     border: 1px solid #d8e3df;
     background: #f4faf7;
     color: #183d32;
     text-decoration: none;
 }
-.lab-entry:hover {
+.post-item a.lab-entry:hover {
     border-color: #1a8a68;
+    text-decoration: none;
 }
 .lab-entry-kicker {
     color: #1a8a68;
@@ -993,14 +994,28 @@ fn render_post_index(config: &Config, pages: &[Page]) -> String {
         let items = pages
             .iter()
             .map(|page| {
+                let lab_entry = if page.route == "/posts/ping-28ms-single-tcp-post-throughput/" {
+                    format!(
+                        r#"<a class="lab-entry" href="{TCP_THROUGHPUT_ROUTE}">
+    <span class="lab-entry-kicker">Interactive lab</span>
+    <strong>TCP 吞吐量实验室</strong>
+    <span>调节 ping，观察 TCP 滑动窗口与 HTTP POST 的传输速度 →</span>
+</a>"#
+                    )
+                } else {
+                    String::new()
+                };
                 format!(
                     r#"    <li class="post-item">
         <a href="{href}">{title}</a>
         <div class="post-meta">{date}</div>
+        {tag_links}
+        {lab_entry}
     </li>"#,
                     href = escape_attr(&encode_uri(&page.route)),
                     title = escape_html(&page.title),
-                    date = escape_html(&page.date_text)
+                    date = escape_html(&page.date_text),
+                    tag_links = render_post_tags(page)
                 )
             })
             .collect::<Vec<_>>()
@@ -1009,18 +1024,7 @@ fn render_post_index(config: &Config, pages: &[Page]) -> String {
         format!("<ul class=\"post-list\">\n{items}\n</ul>")
     };
 
-    let main = format!(
-        r#"<a class="lab-entry" href="{lab_route}">
-    <span class="lab-entry-kicker">Interactive lab</span>
-    <strong>TCP 吞吐量实验室</strong>
-    <span>调节 ping，观察 TCP 滑动窗口与 HTTP POST 的传输速度 →</span>
-</a>
-{post_list}"#,
-        lab_route = TCP_THROUGHPUT_ROUTE,
-        post_list = post_list
-    );
-
-    render_shell(config, "Posts", "/posts/", &main)
+    render_shell(config, "Posts", "/posts/", &post_list)
 }
 
 fn render_tcp_throughput_lab(config: &Config) -> String {
@@ -1070,8 +1074,8 @@ fn render_tcp_throughput_lab(config: &Config) -> String {
     )
 }
 
-fn render_article(config: &Config, page: &Page) -> String {
-    let tag_links = if page.tags.is_empty() {
+fn render_post_tags(page: &Page) -> String {
+    if page.tags.is_empty() {
         String::new()
     } else {
         let links = page
@@ -1088,7 +1092,11 @@ fn render_article(config: &Config, page: &Page) -> String {
             .collect::<Vec<_>>()
             .join("");
         format!("<div class=\"post-tags\">{links}</div>")
-    };
+    }
+}
+
+fn render_article(config: &Config, page: &Page) -> String {
+    let tag_links = render_post_tags(page);
 
     let main = format!(
         r#"<article class="post-content">

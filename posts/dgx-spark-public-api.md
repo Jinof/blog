@@ -8,6 +8,7 @@ tags:
   - tailscale
   - new-api
   - ai
+  - ai-cowrite
 ---
 
 MiniMax H3 在 DGX Spark 上跑起来后，我想在局域网外也能调用它。最后搭了一套 Docker + New API + Tailscale Funnel：模型留在 Spark 上，公网请求先经过 New API 的令牌鉴权，再交给 H3 生成视频。

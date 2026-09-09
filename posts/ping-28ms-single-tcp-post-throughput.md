@@ -7,6 +7,7 @@ tags:
   - networking
   - performance
   - macos
+  - ai-cowrite
 ---
 
 我在实际环境里遇到过一个很反直觉的结果：目标机器的 Ping 大约是 28 ms，但用 `curl` POST 数据时，上传速度只有 1.8 MB/s。
