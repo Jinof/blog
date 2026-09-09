@@ -4,7 +4,6 @@ use std::fs;
 use std::io::{Read, Write};
 use std::net::{TcpListener, TcpStream};
 use std::path::{Path, PathBuf};
-use std::process::Command;
 use std::thread;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
@@ -211,7 +210,9 @@ body {
     color: transparent;
     text-decoration: none;
     cursor: pointer;
-    outline: none;
+}
+.home-entry-link:focus-visible {
+    outline: 2px solid #0066cc;
 }
 .home-entry-link:hover {
     background: transparent;
@@ -305,7 +306,6 @@ fn run() -> Result<(), String> {
 }
 
 fn build_site(root: &Path, include_drafts: bool) -> Result<(), String> {
-    let bevy_dist = build_home_assets(root)?;
     let config = read_config(&root.join("site.config.json"))?;
     let posts_dir = root.join("posts");
     let public_dir = root.join("public");
@@ -323,7 +323,6 @@ fn build_site(root: &Path, include_drafts: bool) -> Result<(), String> {
 
     copy_assets(&posts_dir, &public_dir)?;
     copy_global_assets(root, &public_dir)?;
-    copy_filtered(&bevy_dist, &public_dir.join("bevy"), &|_| true)?;
 
     for page in &pages {
         write_public_file(
@@ -375,70 +374,6 @@ fn build_site(root: &Path, include_drafts: bool) -> Result<(), String> {
     }
 
     Ok(())
-}
-
-fn build_home_assets(root: &Path) -> Result<PathBuf, String> {
-    let wasm_target_dir = root.join("target/wasm32-unknown-unknown/release");
-    let bevy_dist = root.join("target/bevy-home");
-
-    run_command(
-        root,
-        "cargo",
-        &[
-            "build",
-            "--release",
-            "--target",
-            "wasm32-unknown-unknown",
-            "--bin",
-            "home_bevy",
-        ],
-    )?;
-
-    if bevy_dist.exists() {
-        fs::remove_dir_all(&bevy_dist)
-            .map_err(|error| format!("remove {}: {error}", bevy_dist.display()))?;
-    }
-    fs::create_dir_all(&bevy_dist)
-        .map_err(|error| format!("create {}: {error}", bevy_dist.display()))?;
-
-    run_command(
-        root,
-        "wasm-bindgen",
-        &[
-            "--target",
-            "web",
-            "--out-dir",
-            bevy_dist
-                .to_str()
-                .ok_or_else(|| "invalid bevy output path".to_string())?,
-            "--out-name",
-            "home_bevy",
-            wasm_target_dir
-                .join("home_bevy.wasm")
-                .to_str()
-                .ok_or_else(|| "invalid wasm path".to_string())?,
-        ],
-    )?;
-
-    Ok(bevy_dist)
-}
-
-fn run_command(root: &Path, program: &str, args: &[&str]) -> Result<(), String> {
-    let status = Command::new(program)
-        .args(args)
-        .current_dir(root)
-        .status()
-        .map_err(|error| format!("run {program}: {error}"))?;
-
-    if status.success() {
-        Ok(())
-    } else {
-        Err(format!(
-            "`{} {}` failed with status {status}",
-            program,
-            args.join(" ")
-        ))
-    }
 }
 
 fn serve_site(root: &Path, args: &[String]) -> Result<(), String> {
@@ -963,18 +898,11 @@ fn render_index(config: &Config, latest: Option<&Page>) -> String {
     </style>
 </head>
 <body class="home-page">
-<main class="home-stage" aria-label="Interactive Bevy homepage">
-    <canvas id="bevy-home-canvas"></canvas>
+<main class="home-stage" aria-label="Stick figure holding a book">
+    <canvas id="home-canvas" aria-hidden="true"></canvas>
     <a class="home-entry-link" href="/posts/" aria-label="Posts"><span class="book-page"><span class="book-title">{book_title}</span><span class="book-date">{book_date}</span></span></a>
 </main>
-<script type="module">
-try {{
-    const bevy = await import("/bevy/home_bevy.js");
-    await bevy.default();
-}} catch (error) {{
-    console.error("Failed to load Bevy homepage", error);
-}}
-</script>
+<script src="/home.js" defer></script>
 </body>
 </html>
 "#,

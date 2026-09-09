@@ -1,5 +1,5 @@
 {
-  "installCommand": "if [ -f /rust/env ]; then . /rust/env; fi && rustup target add wasm32-unknown-unknown && cargo install wasm-bindgen-cli --locked",
+  "installCommand": "",
   "buildCommand": "if [ -f /rust/env ]; then . /rust/env; fi && cargo run --release -- build",
   "outputDirectory": "public"
 }

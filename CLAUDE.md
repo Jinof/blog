@@ -8,9 +8,6 @@ This is a personal static blog deployed to Vercel (https://blog.jinof.vercel.app
 
 ## Commands
 
-- **Local prerequisites for Bevy/WebAssembly builds**:
-  - `rustup target add wasm32-unknown-unknown`
-  - `cargo install wasm-bindgen-cli --locked`
 - **Build the site**: `cargo run -- build` - Generates static site files in `public/`
 - **Build with drafts**: `cargo run -- build --draft`
 - **Serve locally with drafts**: `cargo run -- serve --draft` - Builds the site and serves `public/` locally, rebuilding on source changes
@@ -21,8 +18,8 @@ This is a personal static blog deployed to Vercel (https://blog.jinof.vercel.app
 
 - `site.config.json` - Main site configuration (baseURL, language, title)
 - `src/main.rs` - Dependency-free Rust build and local preview tool
-- `src/bin/home_bevy.rs` - Bevy/WebAssembly homepage scene
-- `/` - Animation-only Bevy homepage with a link to `/posts/`
+- `assets/home.js` - Dependency-free Canvas 2D homepage scene
+- `/` - Canvas 2D homepage with a link to `/posts/`
 - `/posts/` - Post index page for Markdown posts
 - `posts/` - All Markdown posts included by the Rust build tool
 - `assets/` - New static assets copied into `public/`
