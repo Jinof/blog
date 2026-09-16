@@ -1,5 +1,5 @@
 {
-  "installCommand": "",
-  "buildCommand": "if [ -f /rust/env ]; then . /rust/env; fi && cargo run --release -- build",
+  "installCommand": "if ! command -v go >/dev/null 2>&1; then dnf install -y golang; fi",
+  "buildCommand": "GOTOOLCHAIN=auto go run . build",
   "outputDirectory": "public"
 }

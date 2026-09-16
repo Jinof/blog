@@ -3,3 +3,6 @@
 .DS_Store
 public
 target
+
+/bin/
+/jinof-blog
