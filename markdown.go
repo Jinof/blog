@@ -129,6 +129,26 @@ func markdownToHTML(markdown string) string {
 			html = append(html, renderCodeBlock(code, ""))
 			continue
 		}
+		if index+1 < len(lines) {
+			header, ok := tableCells(line)
+			alignments, valid := tableAlignments(lines[index+1])
+			if ok && valid && len(header) == len(alignments) {
+				flushParagraph()
+				flushList()
+				var rows [][]string
+				index++ // Consume the delimiter row.
+				for index+1 < len(lines) {
+					row, ok := tableCells(lines[index+1])
+					if !ok {
+						break
+					}
+					rows = append(rows, row)
+					index++
+				}
+				html = append(html, renderTable(header, alignments, rows))
+				continue
+			}
+		}
 		flushList()
 		paragraph = append(paragraph, trimmed)
 	}
@@ -139,6 +159,85 @@ func markdownToHTML(markdown string) string {
 		html = append(html, renderCodeBlock(codeLines, ""))
 	}
 	return strings.Join(html, "\n")
+}
+
+// Pipe tables require a delimiter row; ordinary prose containing pipes stays prose.
+func tableCells(line string) ([]string, bool) {
+	line = strings.TrimSpace(line)
+	var cells []string
+	var cell strings.Builder
+	lastDelimiter := false
+	for i := 0; i < len(line); i++ {
+		if line[i] == '\\' && i+1 < len(line) && (line[i+1] == '|' || line[i+1] == '\\') {
+			cell.WriteByte(line[i+1])
+			i++
+			lastDelimiter = false
+		} else if line[i] == '|' {
+			cells = append(cells, strings.TrimSpace(cell.String()))
+			cell.Reset()
+			lastDelimiter = true
+		} else {
+			cell.WriteByte(line[i])
+			lastDelimiter = false
+		}
+	}
+	if len(cells) == 0 {
+		return nil, false
+	}
+	cells = append(cells, strings.TrimSpace(cell.String()))
+	if strings.HasPrefix(line, "|") {
+		cells = cells[1:]
+	}
+	if lastDelimiter {
+		cells = cells[:len(cells)-1]
+	}
+	return cells, len(cells) > 0
+}
+
+func tableAlignments(line string) ([]string, bool) {
+	cells, ok := tableCells(line)
+	if !ok {
+		return nil, false
+	}
+	alignments := make([]string, len(cells))
+	for i, cell := range cells {
+		left, right := strings.HasPrefix(cell, ":"), strings.HasSuffix(cell, ":")
+		dashes := strings.TrimSuffix(strings.TrimPrefix(cell, ":"), ":")
+		if len(dashes) < 3 || strings.Trim(dashes, "-") != "" {
+			return nil, false
+		}
+		switch {
+		case left && right:
+			alignments[i] = "center"
+		case right:
+			alignments[i] = "right"
+		default:
+			alignments[i] = "left"
+		}
+	}
+	return alignments, true
+}
+
+func renderTable(header, alignments []string, rows [][]string) string {
+	var output strings.Builder
+	output.WriteString(`<div class="table-scroll" role="region" aria-label="表格，可横向滚动" tabindex="0"><table><thead><tr>`)
+	for i, cell := range header {
+		fmt.Fprintf(&output, `<th scope="col" style="text-align:%s">%s</th>`, alignments[i], renderInline(cell))
+	}
+	output.WriteString("</tr></thead><tbody>")
+	for _, row := range rows {
+		output.WriteString("<tr>")
+		for i := range header {
+			cell := ""
+			if i < len(row) {
+				cell = row[i]
+			}
+			fmt.Fprintf(&output, `<td style="text-align:%s">%s</td>`, alignments[i], renderInline(cell))
+		}
+		output.WriteString("</tr>")
+	}
+	output.WriteString("</tbody></table></div>")
+	return output.String()
 }
 
 func trimRepeatedPrefix(value, prefix string) string {

@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestMarkdownCompatibility(t *testing.T) {
 	cases := []struct{ name, source, want string }{
@@ -24,5 +27,48 @@ func TestMarkdownCompatibility(t *testing.T) {
 				t.Fatalf("got  %q\nwant %q", got, tc.want)
 			}
 		})
+	}
+}
+
+func TestMarkdownTables(t *testing.T) {
+	source := "intro\n\n| 模型 | 内容 | 数量 |\n| :--- | :---: | ---: |\n| Qwen | `a\\|b` [原图](./image.png) | 3 |\n| Gemma | <script>alert(1)</script> |\n| Extra | value | 2 | ignored |\n\nafter"
+	got := markdownToHTML(source)
+	for _, want := range []string{
+		`<th scope="col" style="text-align:left">模型</th>`,
+		`<th scope="col" style="text-align:center">内容</th>`,
+		`<th scope="col" style="text-align:right">数量</th>`,
+		`<code>a|b</code> <a href="/image.png">原图</a>`,
+		`&lt;script&gt;alert(1)&lt;/script&gt;`,
+		`<td style="text-align:right"></td>`,
+		"</table></div>\n<p>after</p>",
+	} {
+		if !strings.Contains(got, want) {
+			t.Errorf("missing %q in %s", want, got)
+		}
+	}
+	if strings.Contains(got, "<script>") || strings.Contains(got, "ignored") || strings.Count(got, "<td ") != 9 {
+		t.Fatalf("unsafe or malformed table: %s", got)
+	}
+}
+
+func TestMarkdownTableRecognition(t *testing.T) {
+	for _, source := range []string{
+		"A | B\n--- | ---\none | two",
+		"| A |\n| --- |\n| one |",
+	} {
+		if !strings.Contains(markdownToHTML(source), "<table>") {
+			t.Errorf("table not recognized: %q", source)
+		}
+	}
+	for _, source := range []string{
+		"A | B\n--- | invalid\none | two",
+		"A | B\n--- | --- | ---\none | two",
+		"A | B\n::--- | ---\none | two",
+		"```text\n| A | B |\n| --- | --- |\n```",
+		"    | A | B |\n    | --- | --- |",
+	} {
+		if strings.Contains(markdownToHTML(source), "<table>") {
+			t.Errorf("non-table changed: %q", source)
+		}
 	}
 }

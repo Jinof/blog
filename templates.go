@@ -1,6 +1,6 @@
 package main
 
-// Templates retain the existing static HTML and CSS byte for byte.
+// Shared static page styles.
 const style = `
 * {
     margin: 0;
@@ -106,6 +106,31 @@ header h1 a {
 .post-content img {
     max-width: 100%;
     height: auto;
+}
+.post-content .table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+.post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+.post-content th,
+.post-content td {
+    min-width: 12rem;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+}
+.post-content th {
+    background: #f4f4f4;
+}
+.post-content .table-scroll:focus-visible {
+    outline: 2px solid #0066cc;
+    outline-offset: 2px;
 }
 .post-content hr {
     border: 0;
