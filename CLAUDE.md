@@ -8,6 +8,9 @@ This is a personal static blog deployed to Vercel (https://blog.jinof.vercel.app
 
 ## Commands
 
+- **Help**: `go run . --help` or `go run . help new`
+- **New draft**: `go run . new my-post --title "My Post" --tags "go,notes"` - Creates `posts/my-post.md` with the current local timestamp and `draft: true`; never overwrites an existing file. Names may include subdirectories relative to `posts/`.
+
 - **Build the site**: `go run . build` - Generates static site files in `public/`
 - **Build with drafts**: `go run . build --draft`
 - **Serve locally with drafts**: `go run . serve --draft` - Builds the site and serves `public/` locally, rebuilding on source changes

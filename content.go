@@ -159,6 +159,12 @@ func parseFrontmatter(source string) (Frontmatter, string) {
 
 func parseScalar(value string) string {
 	value = strings.TrimSpace(value)
+	if strings.HasPrefix(value, "\"") {
+		var decoded string
+		if json.Unmarshal([]byte(value), &decoded) == nil {
+			return decoded
+		}
+	}
 	if len(value) >= 2 && ((value[0] == '"' && value[len(value)-1] == '"') || (value[0] == '\'' && value[len(value)-1] == '\'')) {
 		return value[1 : len(value)-1]
 	}
