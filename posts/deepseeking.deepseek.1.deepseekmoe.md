@@ -7,7 +7,7 @@ tags:
   - "notes"
   - "paper reading"
 ---
-# Deepseeking Deepseek - DeepSeek MOE
+
 [DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models](https://arxiv.org/abs/2401.06066) 的阅读笔记。
 
 解决的问题：
